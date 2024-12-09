@@ -22,6 +22,10 @@ public class UsuarioService {
         return this.userRepository.findById(id);
     }
 
+    public void createUser(Usuario user) {
+        this.userRepository.save(user);
+    }
+
     public Usuario update(Usuario user) {
         return this.userRepository.save(user);
     }
