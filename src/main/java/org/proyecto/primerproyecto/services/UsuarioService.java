@@ -34,8 +34,26 @@ public class UsuarioService {
         this.userRepository.deleteById(id);
     }
 
-    public Usuario findByUsername(String username) {
+    public Optional<Usuario> findByUsername(String username)
+    {
         return this.userRepository.findByUsername(username);
     }
 
+    public boolean authenticate(String username,String password) {
+        Optional<Usuario> usuario = this.userRepository.findByUsername(username);
+        return usuario.isPresent();
+    }
+
+    public String authWithPassword(String username,String password) {
+        Optional<Usuario> usuarioProv = this.userRepository.findByUsername(username);
+        if (usuarioProv.isEmpty())
+            return "El usuario no existe";
+
+            Usuario usuario = usuarioProv.get();
+            if (usuario.getPassword().equals(password))
+                return "El usuario existe";
+            else
+                return "Contraseña incorrecta";
+
+    }
 }
